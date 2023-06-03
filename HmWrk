@@ -19,7 +19,7 @@ server_socket.bind(server_address) #прив'язали сокет до адре
 print('now our UDP server is up & running')
 
 while True:
-    #отримаємл повідомлення від клієнта 
+    #отримаємо повідомлення від клієнта 
     data, client_address = server_socket.recvfrom(1024)
     print('Received message:', data.decode())
 
