@@ -1,8 +1,52 @@
 #Task 1
 
 #During the lesson, we have created a server and client, 
-which use TCP/IP protocol for communication via sockets.
-In this task, you have to create a server and client, which will use user datagram protocol (UDP) for communication.
+#which use TCP/IP protocol for communication via sockets.
+#In this task, you have to create a server and client, which will use user datagram protocol (UDP) for communication.
+
+
+UPDServer.py 
+
+import socket
+
+
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #створили сокет
+
+
+server_address = ('localhost', 12345) #надали адресу і порт 
+server_socket.bind(server_address) #прив'язали сокет до адреси і порту
+
+print('now our UDP server is up & running')
+
+while True:
+    #отримаємл повідомлення від клієнта 
+    data, client_address = server_socket.recvfrom(1024)
+    print('Received message:', data.decode())
+
+    #відповідь від сервера на запит клієнта
+    response = 'Server sends kind regards!thank you for cooperation'
+    server_socket.sendto(response.encode(), client_address)
+
+UDPClient.py
+import socket
+
+
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #створили сокет клієнта
+
+
+server_address = ('localhost', 12345) #адреса і порт сервера 
+
+
+message = 'Client says hi!' #повідомлення від клієнта
+client_socket.sendto(message.encode(), server_address)
+
+
+response, server_address = client_socket.recvfrom(1024) #отримуємо і виводимо на принт повідомлення від клієнта
+print('Received response:', response.decode())
+
+
+client_socket.close() #закриваємо сокет
+
 
  
 
