@@ -14,7 +14,7 @@ import socket
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #створили сокет
 
 
-server_address = ('localhost', 12345) #надали адресу і порт 
+server_address = ('localhost', 65434) #надали адресу і порт 
 server_socket.bind(server_address) #прив'язали сокет до адреси і порту
 
 print('now our UDP server is up & running')
@@ -35,7 +35,7 @@ import socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #створили сокет клієнта
 
 
-server_address = ('localhost', 12345) #адреса і порт сервера 
+server_address = ('localhost', 65434) #адреса і порт сервера 
 
 
 message = 'Client says hi!' #повідомлення від клієнта
