@@ -4,6 +4,7 @@
 #which use TCP/IP protocol for communication via sockets.
 #In this task, you have to create a server and client, which will use user datagram protocol (UDP) for communication.
 
+#UDP не є надійним протоколом зв'язку, на відміну від TCP.Під час передачі,пакети даних можуть бути втрачені або передані в невпорядкованому вигляді.
 
 UPDServer.py 
 
