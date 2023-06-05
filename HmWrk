@@ -4,52 +4,102 @@
 #which use TCP/IP protocol for communication via sockets.
 #In this task, you have to create a server and client, which will use user datagram protocol (UDP) for communication.
 
-#UDP не є надійним протоколом зв'язку, на відміну від TCP.Під час передачі,пакети даних можуть бути втрачені або передані в невпорядкованому вигляді.
 
-UPDServer.py 
+
+L32T1UPDServer.py 
 
 import socket
 
+def main():
+    #створили UDP socket
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #створили сокет
+    #зв'язали IP address та port
+    server_address = ('localhost', 12348)
+    server_socket.bind(server_address)
+
+    print('Server has started and listening on {}:{}'.format(*server_address))
+
+    while True:
+        print('\nWaiting for a message...')
+        data, address = server_socket.recvfrom(1024)  # отримали дані і адресу клієнта
+
+        # конвертуємо отримані дані у строку
+        message = data.decode('utf-8')
+
+        print('Received message from {}: {}'.format(address, message))
+
+        #повідомлення,що надсилається у відповідь клієнту
+        response = 'I... am.... your Server...'
+
+        # відповідь клієнту 
+        server_socket.sendto(response.encode('utf-8'), address)
+        print('Sent response to {}: {}'.format(address, response))
+
+    #закрили сокет
+    server_socket.close()
+
+if __name__ == '__main__':
+    main()
+
+#консоль:
+#Server has started and listening on localhost:12348
+
+#Waiting for a message...
 
 
-server_address = ('localhost', 65434) #надали адресу і порт 
-server_socket.bind(server_address) #прив'язали сокет до адреси і порту
+L32T1UPDClient.py
 
-print('now our UDP server is up & running')
-
-while True:
-    #отримаємо повідомлення від клієнта 
-    data, client_address = server_socket.recvfrom(1024)
-    print('Received message:', data.decode())
-
-    #відповідь від сервера на запит клієнта
-    response = 'Server sends kind regards!thank you for cooperation'
-    server_socket.sendto(response.encode(), client_address)
-
-UDPClient.py
 import socket
 
+def main():
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #створили сокет клієнта
+    #створили UDP socket
 
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-server_address = ('localhost', 65434) #адреса і порт сервера 
+    server_address = ('localhost', 12348)
 
+    while True:
 
-message = 'Client says hi!' #повідомлення від клієнта
-client_socket.sendto(message.encode(), server_address)
+        message = input('Please enter message to send (or "exit" to quit): ')
 
+        if message.lower() == 'exit':
 
-response, server_address = client_socket.recvfrom(1024) #отримуємо і виводимо на принт повідомлення від клієнта
-print('Received response:', response.decode())
+            break
 
+        #вихідне повідомлення для сервера
 
-client_socket.close() #закриваємо сокет
+        client_socket.sendto(message.encode('utf-8'), server_address)
 
+        print('Message was sent to {}: {}'.format(*server_address, message))
 
- 
+        #отримаємо відповідь від сервера
+
+        response, _ = client_socket.recvfrom(1024)
+
+        #конвертуємо отримані дані у формат строки 
+
+        response_message = response.decode('utf-8')
+
+        print('Received response: {}'.format(response_message))
+
+    #закрили сокет
+
+    client_socket.close()
+
+if __name__ == '__main__':
+
+    main()
+
+#Please enter message to send (or "exit" to quit): Hi there
+
+#Message was sent to localhost: 12348
+
+#Received response: I... am.... your Server...
+
+#Please enter message to send (or "exit" to quit):  exit
+
 
 #Task 2
 
