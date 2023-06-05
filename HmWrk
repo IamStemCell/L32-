@@ -174,3 +174,7 @@ print('Received encrypted response:', encrypted_response.decode())
 client_socket.close()
 
  
+ 
+ #enter the key: 745
+ #enter the text: milk
+ #Received encrypted response: dzcb
