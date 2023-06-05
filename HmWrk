@@ -122,10 +122,10 @@ def caesar_cipher(text, key):
             result += char
     return result
 
-# Create a UDP socket
+#створили UDP socket
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-# Bind the socket to a specific address and port
+#зв'язали адресу і порт сервера 
 server_address = ('localhost', 65435)
 server_socket.bind(server_address)
 
@@ -145,7 +145,7 @@ while True:
     encrypted_text = caesar_cipher(text, key)
     print('Encrypted text:', encrypted_text)
 
-    #висилаємо зашифроване повідомлення клієнту
+    #висилаємо зашифроване повідомлення у відповідь клієнту
     server_socket.sendto(encrypted_text.encode(), client_address)
 
  Task2UPDClient.py 
